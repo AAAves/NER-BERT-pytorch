@@ -19,8 +19,8 @@ import utils
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--data_dir', default='data/msra', help="Directory containing the dataset")
-parser.add_argument('--bert_model_dir', default='bert-base-chinese-pytorch', help="Directory containing the BERT model in PyTorch")
+parser.add_argument('--data_dir', default='my_data/msra', help="Directory containing the dataset")
+parser.add_argument('--bert_model_dir', default='bert-base-cased', help="Directory containing the BERT model in PyTorch")
 parser.add_argument('--model_dir', default='experiments/base_model', help="Directory containing params.json")
 parser.add_argument('--seed', type=int, default=2019, help="random seed for initialization")
 parser.add_argument('--restore_file', default=None,
