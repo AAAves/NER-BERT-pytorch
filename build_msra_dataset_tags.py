@@ -6,7 +6,7 @@ import random
 def load_dataset(path_dataset):
     """Load dataset into memory from text file"""
     dataset = []
-    with open(path_dataset) as f:
+    with open(path_dataset, encoding='utf-8') as f:
         words, tags = [], []
         # Each line of the file corresponds to one word and tag
         for line in f:
@@ -41,7 +41,7 @@ def save_dataset(dataset, save_dir):
         os.makedirs(save_dir)
 
     # Export the dataset
-    with open(os.path.join(save_dir, 'sentences.txt'), 'w') as file_sentences, \
+    with open(os.path.join(save_dir, 'sentences.txt'), 'w', encoding='utf-8') as file_sentences, \
         open(os.path.join(save_dir, 'tags.txt'), 'w') as file_tags:
         for words, tags in dataset:
             file_sentences.write('{}\n'.format(' '.join(words)))
@@ -66,8 +66,8 @@ def build_tags(data_dir, tags_file):
 
 if __name__ == '__main__':
     # Check that the dataset exist, two balnk lines at the end of the file
-    path_train_val = 'data/msra/msra_train_bio'
-    path_test = 'data/msra/msra_test_bio'
+    path_train_val = 'my_data/train_mrsa_bio'
+    path_test = 'my_data/dev_mrsa_bio'
     msg = '{} or {} file not found. Make sure you have downloaded the right dataset'.format(path_train_val, path_test)
     assert os.path.isfile(path_train_val) and os.path.isfile(path_test), msg
 
@@ -83,13 +83,13 @@ if __name__ == '__main__':
     random.shuffle(order)
 
     # Split the dataset into train, val(split with shuffle) and test
-    train_dataset = [dataset_train_val[idx] for idx in order[:42000]]  # 42000 for train
-    val_dataset = [dataset_train_val[idx] for idx in order[42000:]]  # 3000 for val
-    test_dataset = dataset_test  # 3442 for test
-    save_dataset(train_dataset, 'data/msra/train')
-    save_dataset(val_dataset, 'data/msra/val')
-    save_dataset(test_dataset, 'data/msra/test')
+    train_dataset = [dataset_train_val[idx] for idx in order]  # all for train
+    val_dataset = dataset_test  # val == dev == test
+    test_dataset = dataset_test  # dev == test
+    save_dataset(train_dataset, 'my_data/msra/train')
+    save_dataset(val_dataset, 'my_data/msra/val')
+    save_dataset(test_dataset, 'my_data/msra/test')
 
     # Build tags from dataset
-    build_tags('data/msra', 'data/msra/tags.txt')
+    build_tags('my_data/msra', 'my_data/msra/tags.txt')
 
